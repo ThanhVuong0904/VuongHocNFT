@@ -13,7 +13,7 @@ export default function PreviewAvata() {
      const CONTRACT_ADDRESS = '0x955276a71b0C3928309DCd0A84fe2080EA11Ade9'
 
      
-     const [id, setId] = useState(14)
+     const [id, setId] = useState(15)
      const {
           EYES, eye, 
           HEADDRESS, headdress, 
