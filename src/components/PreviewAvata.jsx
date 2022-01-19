@@ -5,7 +5,7 @@ import { NFTContext } from '../contexts/NFTContext'
 import { contractABI } from '../abi'
 import Web3 from "web3"; 
 import axios from 'axios'
-import ImageTest from '../final-images/11.png'
+
 export default function PreviewAvata() {
      const {Moralis} = useMoralis()
      // const CONTRACT_ADDRESS = '0x08f993Bf707CdE7D9f679329d7d1c1b562461DA3'
@@ -26,8 +26,7 @@ export default function PreviewAvata() {
           web3Api,
           user
      } = useContext(NFTContext)
-     let promises = []
-     const createImage = async (e) => {
+     const createNFT = async (e) => {
           const composite = await axios.post('http://localhost:5000/composite', 
                {result: result ,id: id}
           )
@@ -45,37 +44,16 @@ export default function PreviewAvata() {
                          console.log("Domain",setDomain);
                          const receipt = await contract.methods.createNFT(id).send({from: user.get('ethAddress')})
                          console.log(receipt);
-                         // if(receipt.status) {
-                         //      setId(id + 1)
-                         // }
+                         if(receipt.status) {
+                              setId(id + 1)
+                         }
                     }
                },3000)
           }
-          // const res = await axios.post('http://localhost:5000/createMetadata', 
-          //           {id: id}
-          // )
-          // console.log(res);
      }
 
-     const handleTest = async (e) => {
-          // const data = e.target.files[0]
-          // const file = new Moralis.File(data.name, data)
-          // await file.saveIPFS();
-          // console.log(file.ipfs())
-          const options = {
-               "abi": [
-               {
-                 "path": "images/11.png",
-                 "content": btoa(JSON.stringify(ImageTest))
-               }
-             ]
-              };
-             const path = await Moralis.Web3API.storage.uploadFolder(options);
-             console.log(path);
-     }
      return (
           <div className="preview-avatar">
-               <button onClick={handleTest}>Test</button>
                <div className="preview-main">
                     <h3>Metaverse Ape</h3>
                     <div className="preview-content">
@@ -130,7 +108,7 @@ export default function PreviewAvata() {
                          }
                     </div>
                </div>
-               <button onClick={createImage} className='createNFT'>Create NFT</button>
+               <button onClick={createNFT} className='createNFT'>Create NFT</button>
           </div>
      )
 }
