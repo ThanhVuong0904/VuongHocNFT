@@ -12,19 +12,25 @@ import { useEffect, useContext } from "react";
 function App() {
 	const { 
 		authenticate, isAuthenticated, user,  
-		web3, enableWeb3, isWeb3Enabled, isWeb3EnableLoading, web3EnableError 
+		enableWeb3, account, logout, isWeb3Enabled
 	} = useContext(NFTContext);
-	// contract address 0x08f993Bf707CdE7D9f679329d7d1c1b562461DA3
+	console.log(account, user);
+	useEffect(() => {
+		if(!isWeb3Enabled) {
+			enableWeb3()
+		}
+	},[])
 	if(!isAuthenticated) {
 		return (
 			<div>
-			  	<button onClick={() => authenticate()}>Authenticate</button>
+			  	<button onClick={() => authenticate({ signingMessage: "Moralis Authentication" })}>Authenticate</button>
 			</div>
 		);
 	}
 	return (
 		<>
-			<h1 style={{textAlign: 'center'}}>Welcome {user.get("ethAddress")}</h1>
+		<h1 style={{textAlign: 'center'}}>Welcome {account}</h1>
+		<button className="btn-logout" onClick={logout}>Logout</button>
 		<div id="app">
 			<div className="container">
 				<Options />

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
-import { useMoralisFile } from 'react-moralis'
+import React, { useContext } from 'react'
+
 import CheckIcon from '../assets/images/bx-check.svg'
 import { NFTContext } from '../contexts/NFTContext'
-import axios from 'axios'
+
 export default function Eyes() {
      const {options, EYES, eye, setEye,result, setResult} = useContext(NFTContext)
      const handleEye = (id) => {
@@ -11,7 +11,6 @@ export default function Eyes() {
      }
      return (
           <section className={`d-grid-col-3 content-list eyes ${options === 1 ? 'active' : ''}`}>
-               {/* <button onClick={handle}>test</button> */}
                {
                     EYES.map(item => {
                          return (

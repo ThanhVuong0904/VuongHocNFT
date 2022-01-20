@@ -122,9 +122,6 @@ app.use(cors())
 app.post('/composite', async (req, response) => {
      const {result, id} = req.body
      var images = []
-     let ipfsArray = [];
-     let promises = [];
-     let metadata = []
      //BACKGROUND
      const backgroundPromise = new Promise((res, rej) => {
           res(BACKGROUND.find(item => item.id === result.background))
@@ -154,7 +151,6 @@ app.post('/composite', async (req, response) => {
      })
      images.push(clothesPromise.then(data => data))
 
-     
      //ACCESSORIES
      const accessoriesPromise = new Promise((res, rej) => {
           res(ACCESSORIES.find(item => item.id === result.accessories))
@@ -187,61 +183,13 @@ app.post('/composite', async (req, response) => {
                image[0].composite(image[5],0,0);
                image[0].composite(image[6],0,0);
                //Write Image
-               image[0].write(`./public/images/${id}.png`,async (data) => {
+               image[0].write(`./src/final-images/${id}.png`,async (data) => {
                     console.log("Wrote the image");
+                    return response.json({success: true, message: "Composite Image"})
                })
-               //Read image to IPFS
-               // promises.push( new Promise( (res, rej) => {
-               //      fs.readFile(`./public/images/${id}.png`, (err, data) => {
-               //           if (err) rej()
-               //           ipfsArray.push({
-               //                path: `images/${id}.png`,
-               //                content: data.toString("base64")
-               //           })
-               //           res()
-               //      })
-               // }) )
-               // //Push Image to IPFS
-               // Promise.all(promises).then(() => {
-               //      axios.post("https://deep-index.moralis.io/api/v2/ipfs/uploadFolder", 
-               //           ipfsArray,
-               //           {
-               //                headers: {
-               //                     "X-API-KEY": 'k30Du9VUUJbgHG6db8QItgxGryCNwcw0KhZ1tfZz86e1LlabB44y1sMwEwqprYPr',
-               //                     "Content-Type": "application/json",
-               //                     "accept": "application/json"
-               //                }
-               //           }
-               //      ).then( (res) => {
-               //           console.log(res.data);
-               //           //Create Metadata
-               //           metadata.push({
-               //                path: `metadata/${id}.json`,
-               //                content: {
-               //                     image: res.data[0].path
-               //                }
-               //           })
-               //           axios.post("https://deep-index.moralis.io/api/v2/ipfs/uploadFolder",
-               //                metadata,
-               //                {
-               //                     headers: {
-               //                          "X-API-KEY": 'k30Du9VUUJbgHG6db8QItgxGryCNwcw0KhZ1tfZz86e1LlabB44y1sMwEwqprYPr',
-               //                          "Content-Type": "application/json",
-               //                          "accept": "application/json"
-               //                     }
-               //                }
-               //           ).then(pathMetadata => pathMetadata.data[0].path)
-               //           // .then(path => response.json({success: true, message: 'Composite Imageee', json: path}))
-               //      })
-               //      .catch ( (error) => {
-               //           console.log(error)
-               //      })
-               // })
           });
           
      })
-     return response.json({success: true, test: "ok"})
-     
 })
 app.post('/createMetadata', async (req, res) => {
      const {id} = req.body
@@ -249,7 +197,7 @@ app.post('/createMetadata', async (req, res) => {
      let promises = [];
      let metadata = []
      promises.push( new Promise( (res, rej) => {
-          fs.readFile(`./public/images/${id}.png`, (err, data) => {
+          fs.readFile(`./src/final-images/${id}.png`, (err, data) => {
                if (err) rej()
                ipfsArray.push({
                     path: `images/${id}.png`,

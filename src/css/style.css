@@ -35,6 +35,14 @@ button {
           justify-content: center;
 }
 
+.btn-logout {
+  outline: none;
+  border: none;
+  background-color: #DC3545;
+  padding: 10px 15px;
+  color: white;
+}
+
 .container {
   max-width: 1240px;
   width: 100%;

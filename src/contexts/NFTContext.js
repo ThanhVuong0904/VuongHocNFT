@@ -53,7 +53,8 @@ const NFTContextProvider = ({children}) => {
           web3: null,
      })
      const { 
-		authenticate, isAuthenticated, user,   
+		authenticate, isAuthenticated, user, 
+          account, logout, isWeb3Enabled, enableWeb3
 	} = useMoralis();
      //Eye, Headdress...
      const [options, setOptions] = useState(1)
@@ -141,19 +142,6 @@ const NFTContextProvider = ({children}) => {
           background
      })
      
-     const state = {
-          options, setOptions,
-          EYES, eye, setEye,
-          HEADDRESS, headdress, setHeaddress,
-          PHONE, phone, setPhone,
-          MOUTH, mouth, setMouth,
-          CLOTHES, clothes, setClothes,
-          ACCESSORIES, accessories, setAccessories,
-          BACKGROUND, background, setBackground,
-          result, setResult,
-          authenticate, isAuthenticated, user,
-          web3Api  
-     }
      useEffect(() => {
           const loadProvider = async () => {
                const provider = await detectEthereumProvider()
@@ -169,6 +157,22 @@ const NFTContextProvider = ({children}) => {
           }
           loadProvider()
      }, [])
+
+     const state = {
+          options, setOptions,
+          EYES, eye, setEye,
+          HEADDRESS, headdress, setHeaddress,
+          PHONE, phone, setPhone,
+          MOUTH, mouth, setMouth,
+          CLOTHES, clothes, setClothes,
+          ACCESSORIES, accessories, setAccessories,
+          BACKGROUND, background, setBackground,
+          result, setResult,
+          authenticate, isAuthenticated, user,
+          web3Api , account , logout, isWeb3Enabled, enableWeb3
+     }
+     
+     
      return (
           <NFTContext.Provider value={state}>
                {children}

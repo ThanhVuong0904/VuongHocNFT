@@ -1,19 +1,13 @@
-import React, { useState } from 'react'
-import { useMoralis } from 'react-moralis'
-import { useContext } from 'react/cjs/react.development'
+import React, { useState, useContext } from 'react'
 import { NFTContext } from '../contexts/NFTContext'
 import { contractABI } from '../abi'
-import Web3 from "web3"; 
+
 import axios from 'axios'
 
 export default function PreviewAvata() {
-     const {Moralis} = useMoralis()
-     // const CONTRACT_ADDRESS = '0x08f993Bf707CdE7D9f679329d7d1c1b562461DA3'
-     //new
      const CONTRACT_ADDRESS = '0x955276a71b0C3928309DCd0A84fe2080EA11Ade9'
-
-     
-     const [id, setId] = useState(15)
+     //Hiện tại đã có NFT ID18
+     const [id, setId] = useState(19)
      const {
           EYES, eye, 
           HEADDRESS, headdress, 
@@ -24,7 +18,7 @@ export default function PreviewAvata() {
           BACKGROUND, background,
           result,
           web3Api,
-          user
+          account
      } = useContext(NFTContext)
      const createNFT = async (e) => {
           const composite = await axios.post('http://localhost:5000/composite', 
@@ -32,23 +26,22 @@ export default function PreviewAvata() {
           )
           console.log(composite);
           if(composite.data.success) {
-               setTimeout( async () => {
-                    const res = await axios.post('http://localhost:5000/createMetadata', 
-                         {id: id}
-                    )
-                    if(res.data.success) {
-                         const contract = await new web3Api.web3.eth.Contract(contractABI, CONTRACT_ADDRESS)
-                         const setDomain = await contract.methods.inputDomain(
-                              res.data.metadata.slice(0,90))
-                              .send({from: user.get('ethAddress')})
-                         console.log("Domain",setDomain);
-                         const receipt = await contract.methods.createNFT(id).send({from: user.get('ethAddress')})
-                         console.log(receipt);
-                         if(receipt.status) {
-                              setId(id + 1)
-                         }
+               const res = await axios.post('http://localhost:5000/createMetadata', 
+                    {id: id}
+               )
+               if(res.data.success) {
+                    const contract = await new web3Api.web3.eth.Contract(contractABI, CONTRACT_ADDRESS)
+                    const setDomain = await contract.methods.inputDomain(
+                         res.data.metadata.slice(0,90))
+                         .send({from: account})
+                    console.log("Domain",setDomain);
+                    const receipt = await contract.methods.createNFT(id).send({from: account})
+                    console.log(receipt);
+                    if(receipt.status) {
+                         setId(id + 1)
+                         console.log("Tạo thành công NFT với ID: ",id);
                     }
-               },3000)
+               }
           }
      }
 
