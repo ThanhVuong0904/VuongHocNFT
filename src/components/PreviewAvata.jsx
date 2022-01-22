@@ -9,8 +9,8 @@ export default function PreviewAvata() {
      const {
           saveFile,
      } = useMoralisFile();
-     //Hiện tại đã có NFT ID21
-     const [id, setId] = useState(22)
+     //Hiện tại đã có NFT ID22
+     const [id, setId] = useState(23)
      const {
           EYES, eye, 
           HEADDRESS, headdress, 
