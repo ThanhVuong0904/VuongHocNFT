@@ -120,10 +120,14 @@ const PORT = process.env.PORT || 5000
 app.use(cors())
 // https://shlprjquhmo7.usemoralis.com
 app.post('/composite', async (req, response) => {
-     const {result, id} = req.body
+     const {result, id, backgroundByUser} = req.body
+     console.log(backgroundByUser);
      var images = []
      //BACKGROUND
      const backgroundPromise = new Promise((res, rej) => {
+          if(backgroundByUser !== undefined) {
+               res({image: backgroundByUser})
+          }
           res(BACKGROUND.find(item => item.id === result.background))
      })
      images.push(backgroundPromise.then(data => data))
@@ -176,6 +180,14 @@ app.post('/composite', async (req, response) => {
           Promise.all(jimps).then(function() {
                return Promise.all(jimps);
           }).then(async function(image) {
+               // image[0] = background
+               // image[1] = eye
+               // image[2] = headdress
+               // image[3] = phone
+               // image[4] = clothes
+               // image[5] = ACCESSORIES
+               // image[6] = MOUTH
+               image[0].resize(1062,1062); //resize background w1062 h1062
                image[0].composite(image[1],0,0);
                image[0].composite(image[2],0,0);
                image[0].composite(image[3],0,0);

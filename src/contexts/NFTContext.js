@@ -52,6 +52,12 @@ const NFTContextProvider = ({children}) => {
           provider: null,
           web3: null,
      })
+     const [backgroundByUser, setBackgroundByUser] = useState({
+          boolean: false,
+          image: null,
+          file: null,
+     })
+
      const { 
 		authenticate, isAuthenticated, user, 
           account, logout, isWeb3Enabled, enableWeb3
@@ -167,6 +173,7 @@ const NFTContextProvider = ({children}) => {
           CLOTHES, clothes, setClothes,
           ACCESSORIES, accessories, setAccessories,
           BACKGROUND, background, setBackground,
+          backgroundByUser, setBackgroundByUser,
           result, setResult,
           authenticate, isAuthenticated, user,
           web3Api , account , logout, isWeb3Enabled, enableWeb3
