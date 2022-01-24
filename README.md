@@ -12,7 +12,7 @@
 
 Contract được viết trên https://remix.ethereum.org/ và đã Deploy
 
-`
+```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
@@ -48,7 +48,7 @@ contract MyTokenTV is ERC721, Ownable {
        return Items[tokenId].uri;
     }
 }
-`
+```
 
 Contract address: `0xb58722a57AB337e0ed3e159168182546f14da997`
 
