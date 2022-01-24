@@ -1,21 +1,18 @@
 # NFT Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Setup mạng Rinkeby (Testnet)
 1. Chọn mạng Rinkeby
+
 ![image](https://user-images.githubusercontent.com/68543789/150730786-73c38b9b-6b21-4668-ba19-eadc66d917f2.png)
 
+2. Nạp 1 ít tiền vào ví từ https://faucets.chain.link/rinkeby?_ga=2.194193700.840943072.1643004605-1693912681.1641270658
 
 
+### `Run App`
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Đề chạy dự án cần làm như sau
+Trong terminal gõ lệnh
+`npm start`
 
 ### `npm test`
 
