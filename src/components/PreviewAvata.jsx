@@ -1,16 +1,21 @@
 import React, { useState, useContext } from 'react'
 import { NFTContext } from '../contexts/NFTContext'
-import { contractABI } from '../abi'
+// import { contractABI } from '../abi'
+import { abiMYTOKENTV } from '../abi2'
+import {Moralis} from 'moralis'
 import { useMoralisFile } from 'react-moralis'
 import axios from 'axios'
 
 export default function PreviewAvata() {
+     // Old
      const CONTRACT_ADDRESS = '0x955276a71b0C3928309DCd0A84fe2080EA11Ade9'
+     //New contract
+     const MYTOKENTV = '0xb58722a57AB337e0ed3e159168182546f14da997'
      const {
           saveFile,
      } = useMoralisFile();
-     //Hiện tại đã có NFT ID22
-     const [id, setId] = useState(23)
+     //Id bây giờ không quan trọng, chỉ dùng để đặt tên cho hình
+     const [id, setId] = useState(25)
      const {
           EYES, eye, 
           HEADDRESS, headdress, 
@@ -24,33 +29,37 @@ export default function PreviewAvata() {
           web3Api,
           account
      } = useContext(NFTContext)
-     const createNFT = async (e) => {
-          //if have background by user
+     const createNFT = async () => {
           if(backgroundByUser.boolean) {
-               console.log(backgroundByUser);
+               //Upload background to IPFS
                const fileImage = await new saveFile("background.png", backgroundByUser.file, {saveIPFS: true})
-               console.log(fileImage._ipfs);
+               console.log("Background by user",fileImage._ipfs);
+               //Composite Image
                const composite = await axios.post('http://localhost:5000/composite', 
                     {result: result ,id: id, backgroundByUser: fileImage._ipfs}
                )
-               console.log(composite);
+               console.log("composite",composite);
                if(composite.data.success) {
-                    const res = await axios.post('http://localhost:5000/createMetadata', 
+                    //Upload image composite to IPFS
+                    const res = await axios.post('http://localhost:5000/uploadImage', 
                          {id: id}
                     )
+                    console.log("Upload image composite to IFPS",res);
+                    //Create Metadata
                     if(res.data.success) {
-                         const contract = await new web3Api.web3.eth.Contract(contractABI, CONTRACT_ADDRESS)
-                         const setDomain = await contract.methods.inputDomain(
-                              res.data.metadata.slice(0,90))
-                              .send({from: account})
-                         console.log("Domain",setDomain);
-                         const receipt = await contract.methods.createNFT(id).send({from: account})
-                         console.log(receipt);
-                         if(receipt.status) {
-                              setId(id + 1)
-                              console.log("Tạo thành công NFT với ID: ",id);
-                              
-                         }
+                         const metadata = { image: res.data.image };
+                         const nftFileMetadataFile = new Moralis.File(
+                              "metadata.json", 
+                              {
+                                   base64 : btoa(JSON.stringify(metadata))
+                              }
+                         );
+                         await nftFileMetadataFile.saveIPFS();
+                         const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+                         console.log("metadata",nftFileMetadataFilePath);
+                         const contract = await new web3Api.web3.eth.Contract(abiMYTOKENTV, MYTOKENTV)
+                         const receipt = await contract.methods.createItem(nftFileMetadataFilePath).send({from: account})
+                         console.log("receipt",receipt);
                     }
                }
           }
@@ -60,21 +69,24 @@ export default function PreviewAvata() {
                )
                console.log(composite);
                if(composite.data.success) {
-                    const res = await axios.post('http://localhost:5000/createMetadata', 
+                    const res = await axios.post('http://localhost:5000/uploadImage', 
                          {id: id}
                     )
+                    console.log(res);
                     if(res.data.success) {
-                         const contract = await new web3Api.web3.eth.Contract(contractABI, CONTRACT_ADDRESS)
-                         const setDomain = await contract.methods.inputDomain(
-                              res.data.metadata.slice(0,90))
-                              .send({from: account})
-                         console.log("Domain",setDomain);
-                         const receipt = await contract.methods.createNFT(id).send({from: account})
-                         console.log(receipt);
-                         if(receipt.status) {
-                              setId(id + 1)
-                              console.log("Tạo thành công NFT với ID: ",id);
-                         }
+                         const metadata = { image: res.data.image };
+                         const nftFileMetadataFile = new Moralis.File(
+                              "metadata.json", 
+                              {
+                                   base64 : btoa(JSON.stringify(metadata))
+                              }
+                         );
+                         await nftFileMetadataFile.saveIPFS();
+                         const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+                         console.log("metadata",nftFileMetadataFilePath);
+                         const contract = await new web3Api.web3.eth.Contract(abiMYTOKENTV, MYTOKENTV)
+                         const receipt = await contract.methods.createItem(nftFileMetadataFilePath).send({from: account})
+                         console.log("receipt",receipt);
                     }
                }
           }

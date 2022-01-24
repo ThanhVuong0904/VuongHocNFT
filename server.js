@@ -203,7 +203,60 @@ app.post('/composite', async (req, response) => {
           
      })
 })
-app.post('/createMetadata', async (req, res) => {
+// Tạm thời không dùng nữa
+// app.post('/createMetadata', async (req, res) => {
+//      const {id} = req.body
+//      let ipfsArray = [];
+//      let promises = [];
+//      let metadata = []
+//      promises.push( new Promise( (res, rej) => {
+//           fs.readFile(`./src/final-images/${id}.png`, (err, data) => {
+//                if (err) rej()
+//                ipfsArray.push({
+//                     path: `images/${id}.png`,
+//                     content: data.toString("base64")
+//                })
+//                res()
+//           })
+//      }) )
+//      //Push Image to IPFS
+//      Promise.all(promises).then(() => {
+//           axios.post("https://deep-index.moralis.io/api/v2/ipfs/uploadFolder", 
+//                ipfsArray,
+//                {
+//                     headers: {
+//                          "X-API-KEY": 'k30Du9VUUJbgHG6db8QItgxGryCNwcw0KhZ1tfZz86e1LlabB44y1sMwEwqprYPr',
+//                          "Content-Type": "application/json",
+//                          "accept": "application/json"
+//                     }
+//                }
+//           ).then( (response) => {
+//                console.log(response.data);
+//                // return res.json({success: true, image: response.data[0].path})
+//                //Create Metadata
+//                metadata.push({
+//                     path: `metadata/${id}.json`,
+//                     content: {
+//                          image: response.data[0].path
+//                     }
+//                })
+//                axios.post("https://deep-index.moralis.io/api/v2/ipfs/uploadFolder",
+//                     metadata,
+//                     {
+//                          headers: {
+//                               "X-API-KEY": 'k30Du9VUUJbgHG6db8QItgxGryCNwcw0KhZ1tfZz86e1LlabB44y1sMwEwqprYPr',
+//                               "Content-Type": "application/json",
+//                               "accept": "application/json"
+//                          }
+//                     }
+//                ).then(pathMetadata => res.json({success: true, metadata: pathMetadata.data[0].path}))
+//           })
+//           .catch ( (error) => {
+//                console.log(error)
+//           })
+//      })
+// })
+app.post('/uploadImage', async (req, res) => {
      const {id} = req.body
      let ipfsArray = [];
      let promises = [];
@@ -231,24 +284,7 @@ app.post('/createMetadata', async (req, res) => {
                }
           ).then( (response) => {
                console.log(response.data);
-               // return res.json({success: true, image: response.data[0].path})
-               //Create Metadata
-               metadata.push({
-                    path: `metadata/${id}.json`,
-                    content: {
-                         image: response.data[0].path
-                    }
-               })
-               axios.post("https://deep-index.moralis.io/api/v2/ipfs/uploadFolder",
-                    metadata,
-                    {
-                         headers: {
-                              "X-API-KEY": 'k30Du9VUUJbgHG6db8QItgxGryCNwcw0KhZ1tfZz86e1LlabB44y1sMwEwqprYPr',
-                              "Content-Type": "application/json",
-                              "accept": "application/json"
-                         }
-                    }
-               ).then(pathMetadata => res.json({success: true, metadata: pathMetadata.data[0].path}))
+               return res.json({success: true, image: response.data[0].path})
           })
           .catch ( (error) => {
                console.log(error)
