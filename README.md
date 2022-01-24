@@ -8,9 +8,14 @@
 2. Nạp 1 ít tiền vào ví từ https://faucets.chain.link/rinkeby?_ga=2.194193700.840943072.1643004605-1693912681.1641270658
 
 
-### Contract
+## Contract
 
 Contract được viết trên https://remix.ethereum.org/ và đã Deploy
+
+
+Contract address: `0xb58722a57AB337e0ed3e159168182546f14da997`
+
+ABI của contract được lưu ở `./src/abiContract.js`
 
 ```
 // SPDX-License-Identifier: MIT
@@ -50,12 +55,9 @@ contract MyTokenTV is ERC721, Ownable {
 }
 ```
 
-Contract address: `0xb58722a57AB337e0ed3e159168182546f14da997`
-
-ABI của contract được lưu ở `./src/abi/abiContract.js`
 
 
-### Run App
+## Run App
 
 Đề chạy dự án cần làm như sau
 - Trong terminal gõ lệnh
