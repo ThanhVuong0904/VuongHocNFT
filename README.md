@@ -64,7 +64,7 @@ contract MyTokenTV is ERC721, Ownable {
 
 `npm start` 
 
-- Mở thêm 1 terminal nữa để chạy file server.js bằng cách
+- Mở thêm 1 terminal nữa để chạy file `server.js` bằng cách
 
 `node server`
 
