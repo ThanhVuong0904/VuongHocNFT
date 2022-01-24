@@ -12,7 +12,18 @@
 
 Đề chạy dự án cần làm như sau
 - Trong terminal gõ lệnh
+
 `npm start`
+
 - Mở thêm 1 terminal nữa để chạy file server.js bằng cách
+
 `node server`
+
+### Contract
+
+Contract được viết trên https://remix.ethereum.org/ và đã Deploy
+
+Contract address: 0xb58722a57AB337e0ed3e159168182546f14da997
+
+ABI của contract được lưu ở `./src/abi/abiContract.js`
 
