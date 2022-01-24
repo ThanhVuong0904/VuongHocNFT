@@ -1,10 +1,13 @@
-# Getting Started with Create React App
+# NFT Demo
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Setup mạng Rinkeby (Testnet)
+1. Chọn mạng Rinkeby
+![image](https://user-images.githubusercontent.com/68543789/150730786-73c38b9b-6b21-4668-ba19-eadc66d917f2.png)
 
-In the project directory, you can run:
+
+
 
 ### `npm start`
 
