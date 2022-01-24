@@ -60,10 +60,13 @@ contract MyTokenTV is ERC721, Ownable {
 ## Run App
 
 Đề chạy dự án cần làm như sau
-- Trong terminal gõ lệnh
+- Mở terminal và gõ lệnh
 
-`npm start`
+`npm start` 
 
 - Mở thêm 1 terminal nữa để chạy file server.js bằng cách
 
 `node server`
+
+![image](https://user-images.githubusercontent.com/68543789/150733579-7f89c575-87bf-4df2-b885-3b6a06ea9675.png)
+
